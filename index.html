@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leave Application Generator</title>
+<style>
+    body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(to right, #d4fc79, #96e6a1);
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        width: 90%;
+        max-width: 700px;
+        background: #fff;
+        margin: 40px auto;
+        padding: 25px 30px;
+        border-radius: 20px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    label {
+        font-weight: bold;
+        display: block;
+        margin-top: 15px;
+    }
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+    button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        margin-top: 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+    }
+    button:hover {
+        background-color: #218838;
+    }
+    #output {
+        margin-top: 30px;
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        white-space: pre-wrap;
+        border: 1px solid #ccc;
+        line-height: 1.6;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>Leave Application Generator</h2>
+    <form id="leaveForm">
+        <label>Full Name:</label>
+        <input type="text" id="name" placeholder="Enter your name" required>
+
+        <label>Class:</label>
+        <input type="text" id="className" placeholder="Enter your class" required>
+
+        <label>Leave Start Date (From):</label>
+        <input type="date" id="fromDate" required>
+
+        <label>Leave End Date (To):</label>
+        <input type="date" id="toDate" required>
+
+        <label>Application Type:</label>
+        <select id="leaveType" required>
+            <option value="">-- Select Type --</option>
+            <option value="sick">Sick Leave</option>
+            <option value="personal">Personal Leave</option>
+            <option value="family">Family Function Leave</option>
+            <option value="other">Other</option>
+        </select>
+
+        <button type="button" onclick="generateApplication()">Generate Application</button>
+    </form>
+
+    <div id="output"></div>
+</div>
+
+<script>
+function generateApplication() {
+    const name = document.getElementById("name").value.trim();
+    const className = document.getElementById("className").value.trim();
+    const fromDate = document.getElementById("fromDate").value;
+    const toDate = document.getElementById("toDate").value;
+    const leaveType = document.getElementById("leaveType").value;
+
+    if (!name || !className || !fromDate || !toDate || !leaveType) {
+        alert("Please fill out all fields.");
+        return;
+    }
+
+    let reason = "";
+    if (leaveType === "sick")
+        reason = "I have been suffering from a high fever and cold for the past few days. The doctor has advised me to take proper rest to recover fully.";
+    else if (leaveType === "personal")
+        reason = "I have some urgent personal work at home that requires my attention. Therefore, I will not be able to attend school during this period.";
+    else if (leaveType === "family")
+        reason = "There is an important family function at my home, and my presence is necessary. Hence, I kindly request you to grant me leave for the mentioned days.";
+    else
+        reason = "I am requesting leave due to some unavoidable circumstances.";
+
+    const application = `
+To,
+The Principal,
+SDGI GLOBAL UNIVERSITY,
+Avantika Phase 2, Ghaziabad
+
+Subject: Application for Leave
+
+Respected Sir/Madam,
+
+I am ${name} of class ${className}. I am unable to attend college from ${fromDate} to ${toDate} because ${reason} Kindly grant me leave for the mentioned period. I shall be highly obliged for your kind consideration.
+
+Thanking you,
+Yours obediently,
+${name}.
+`;
+
+    document.getElementById("output").innerText = application;
+}
+</script>
+</body>
+</html>
